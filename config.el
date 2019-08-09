@@ -9,3 +9,5 @@
 (setq
  org-directory "~/org"
  org-agenda-file-regexp "\\`[^.].*\\.\\(org\\.txt\\|org\\)\\'")
+
+(setq deft-directory "~/org/notes")
