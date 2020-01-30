@@ -5,6 +5,18 @@
 
 (setq doom-font (font-spec :family "Menlo" :size 13))
 
+(defun rae-delete-frame()
+  (interactive)
+  (delete-frame)
+  )
+
+;; custom key bindings
+(map! :leader
+      (:prefix-map ("x" . "+extensions")
+        :desc "Journal" "j" #'rae-org-journal
+        :desc "Delete Frame" "0" #'rae-delete-frame)
+      )
+
 (after! org
   (add-to-list
    'auto-mode-alist '("\\.\\(org\\|org_archive\\|org\\.txt\\)$" . org-mode))
@@ -27,4 +39,15 @@
 
 (after! deft
   (setq deft-directory "~/org/notes")
+  )
+
+(setq open-junk-file-format "~/org/scratch")
+
+;; org-journal
+(setq org-journal-dir "~/org/journal"
+      org-journal-file-format "%Y%m%d.txt")
+(defun rae-org-journal()
+  (interactive)
+  (org-journal-new-entry nil)
+  (delete-other-windows)
   )
