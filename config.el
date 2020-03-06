@@ -37,15 +37,19 @@
    )
   )
 
-(after! deft
-  (setq deft-directory "~/org/notes")
-  )
-
 (setq open-junk-file-format "~/org/scratch")
 
 ;; org-journal
-(setq org-journal-dir "~/org/journal"
-      org-journal-file-format "%Y%m%d.txt")
+;;
+(after! org-journal
+  (setq org-journal-dir "~/org/notes"
+        org-journal-date-prefix "#+TITLE: "
+        org-journal-file-format "%Y-%m-%d.org"
+        org-journal-date-format "%Y-%m-%d (%A, %B %d, %Y)"
+        org-journal-cache-file (concat doom-cache-dir "org-journal")
+        org-journal-file-pattern (org-journal-dir-and-format->regex
+                                  org-journal-dir org-journal-file-format)))
+
 (defun rae-org-journal()
   (interactive)
   (org-journal-new-entry nil)
@@ -58,3 +62,15 @@
 (add-hook! 'go-mode-hook
   (add-hook 'before-save-hook #'lsp-format-buffer nil 'local)
   (add-hook 'before-save-hook #'lsp-organize-imports nil 'local))
+
+(use-package! org-roam
+  :commands (org-roam-insert org-roam-find-file org-roam)
+  :init
+  (setq org-roam-directory "~/org/notes")
+  (map! :leader
+        :prefix "n"
+        :desc "Org-Roam-Insert" "i" #'org-roam-insert
+        :desc "Org-Roam-Find"   "/" #'org-roam-find-file
+        :desc "Org-Roam-Buffer" "r" #'org-roam)
+  :config
+  (org-roam-mode +1))

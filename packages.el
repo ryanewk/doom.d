@@ -8,3 +8,6 @@
 
 (package! groovy-mode)
 (package! open-junk-file)
+
+(package! org-roam
+  :recipe (:host github :repo "jethrokuan/org-roam" :branch "develop"))
